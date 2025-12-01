@@ -1,36 +1,78 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# AI Content Agent for Sitecore XM Cloud  
+### Next.js + Claude (Anthropic) + Community MCP Server
 
-## Getting Started
+This repository contains a customized **Next.js** application that integrates an **AI Agent inside SitecoreAI Pages** using the Sitecore Marketplace App framework.
 
-First, run the development server:
+The agent allows editors to use **natural language** to perform content operations in XM Cloud.  
+Claude AI generates action plans in JSON, and the **community MCP server** executes those instructions inside Sitecore.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+This is a Proof of Concept (POC) demonstrating what is possible when combining:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- Claude AI  
+- The MCP protocol  
+- The Marketplace Client SDK  
+- Sitecore XM Cloud Pages  
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## ✨ Features
 
-## Learn More
+- AI panel embedded directly inside **Sitecore Pages**
+- Natural language-to-action conversion powered by **Claude**
+- Executes real Sitecore operations using **MCP tools**
+- Real-time logs, results, and action plans
+- Conversation history for context continuity
+- Example workflows (e.g., generating ALT tags for images)
+- Fully local Next.js development with hot reload
+- Works as a custom app in the Sitecore Marketplace
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🧱 Tech Stack
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- **Next.js 14+**
+- **React 18+**
+- **TypeScript**
+- **Anthropic Claude API (`@anthropic-ai/sdk`)**
+- **Marketplace Client SDK (`@sitecore-marketplace-sdk/client`, `@sitecore-marketplace-sdk/xmc`)**
+- **Community MCP Server** (`@antonytm/mcp-sitecore-server`)
+- **Model Context Protocol Client** (`@modelcontextprotocol/sdk`)
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 📂 Project Structure (Key Files)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+| File | Purpose |
+|------|---------|
+| `app/api/agent/route.ts` | Core backend logic: creates Claude prompt, parses JSON plan, executes MCP tools, returns results |
+| `lib/mcp-client.ts` | Connects to the community MCP server using stdio transport |
+| `components/IAgent.tsx` | Frontend UI: handles prompt input, conversation history, logs, results |
+| `utils/hooks/useMarketplaceClient.ts` | Initializes Marketplace Client SDK and retrieves Pages context |
+| `app/index.tsx` | Main entry point: renders `<IAgent />` inside the Marketplace app container |
+
+---
+
+## 🔧 Environment Variables
+
+Create a `.env.local` file in the project root:
+
+```env
+APP_ENV=dev
+MCP_DEFAULT_SITE=brandA
+XM_LANGUAGE=es
+
+TRANSPORT=stdio
+GRAPHQL_ENDPOINT=https://xmc-abcde.sitecorecloud.io/sitecore/api/graph/
+GRAPHQL_SCHEMAS=edge,master,core
+GRAPHQL_API_KEY=f529e11111111111111ff392
+GRAPHQL_HEADERS=
+ITEM_SERVICE_DOMAIN=sitecore
+ITEM_SERVICE_USERNAME=myuser //create a new user in the CM of sitecoreAI
+ITEM_SERVICE_PASSWORD=b
+ITEM_SERVICE_SERVER_URL=https://xmc-abcde.sitecorecloud.io/
+POWERSHELL_DOMAIN=sitecore
+POWERSHELL_USERNAME=myuser 
+POWERSHELL_PASSWORD=b
+POWERSHELL_SERVER_URL=https://xmc-abcde.sitecorecloud.io/
+ANTHROPIC_API_KEY=sk-ant-api03-111111111111111111111111111111111111tWXoww-K7vaBQAA
+NODE_TLS_REJECT_UNAUTHORIZED=0
