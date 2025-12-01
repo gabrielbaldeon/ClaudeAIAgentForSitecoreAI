@@ -76,3 +76,12 @@ POWERSHELL_PASSWORD=b
 POWERSHELL_SERVER_URL=https://xmc-abcde.sitecorecloud.io/
 ANTHROPIC_API_KEY=sk-ant-api03-111111111111111111111111111111111111tWXoww-K7vaBQAA
 NODE_TLS_REJECT_UNAUTHORIZED=0
+```
+
+## ✨ How to Run
+
+- Install dependencies
+    - cd src
+    - npm install
+- Run the local development server
+    - npm run dev
