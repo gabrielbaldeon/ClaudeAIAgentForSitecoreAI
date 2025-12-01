@@ -1,4 +1,4 @@
-# AI Content Agent for Sitecore XM Cloud  
+# AI Content Agent for SitecoreAI 
 ### Next.js + Claude (Anthropic) + Community MCP Server
 
 This repository contains a customized **Next.js** application that integrates an **AI Agent inside SitecoreAI Pages** using the Sitecore Marketplace App framework.
